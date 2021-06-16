@@ -1757,10 +1757,10 @@ void auto_3d_rm_bf(int nbox_full,int *indices,Box3D *boxes,
 	for(jj=ii+1;jj<np1;jj++) {
 	  double r2;
 	  double *pos2=&(boxes[ip1].pos[N_POS*jj]);
-	  double xr[3],xcm[3];
-	  xr[0]=pos1[0]-pos2[0];
-	  xr[1]=pos1[1]-pos2[1];
-	  xr[2]=pos1[2]-pos2[2];
+	  double xr[3],xcm[3]; //changed sign 3 below
+	  xr[0]=-pos1[0]+pos2[0];
+	  xr[1]=-pos1[1]+pos2[1];
+	  xr[2]=-pos1[2]+pos2[2];
 	  xcm[0]=0.5*(pos1[0]+pos2[0]);
 	  xcm[1]=0.5*(pos1[1]+pos2[1]);
 	  xcm[2]=0.5*(pos1[2]+pos2[2]);
@@ -1770,10 +1770,10 @@ void auto_3d_rm_bf(int nbox_full,int *indices,Box3D *boxes,
 	    if((ir<nb_r)&&(ir>=0)) {
 	      int icth;
 	      if(r2==0) icth=0;
-	      else {
-		double cth=fabs(xr[0]*xcm[0]+xr[1]*xcm[1]+xr[2]*xcm[2])/
+	      else { //remove absolute and change binning
+		double cth=(xr[0]*xcm[0]+xr[1]*xcm[1]+xr[2]*xcm[2])/
 		  sqrt((xcm[0]*xcm[0]+xcm[1]*xcm[1]+xcm[2]*xcm[2])*r2);
-		icth=(int)(cth*nb_mu);
+		icth=(int)((cth+1.0)*nb_mu/2.0);
 	      }
 	      if((icth<nb_mu)&&(icth>=0)) {
 #ifdef _WITH_WEIGHTS
@@ -1909,9 +1909,9 @@ void cross_3d_rm_bf(int nbox_full,int *indices,
 		  double r2;
 		  double *pos2=&(boxes2[ip2].pos[N_POS*jj]);
 		  double xr[3],xcm[3];
-		  xr[0]=pos1[0]-pos2[0];
-		  xr[1]=pos1[1]-pos2[1];
-		  xr[2]=pos1[2]-pos2[2];
+		  xr[0]=-pos1[0]+pos2[0]; //changed sign three below
+		  xr[1]=-pos1[1]+pos2[1];
+		  xr[2]=-pos1[2]+pos2[2];
 		  xcm[0]=0.5*(pos1[0]+pos2[0]);
 		  xcm[1]=0.5*(pos1[1]+pos2[1]);
 		  xcm[2]=0.5*(pos1[2]+pos2[2]);
@@ -1921,10 +1921,10 @@ void cross_3d_rm_bf(int nbox_full,int *indices,
 		    if((ir<nb_r)&&(ir>=0)) {
 		      int icth;
 		      if(r2==0) icth=0;
-		      else {
-			double cth=fabs(xr[0]*xcm[0]+xr[1]*xcm[1]+xr[2]*xcm[2])/
+		      else { //remove absolute, and change mu binning
+			double cth=(xr[0]*xcm[0]+xr[1]*xcm[1]+xr[2]*xcm[2])/
 			  sqrt((xcm[0]*xcm[0]+xcm[1]*xcm[1]+xcm[2]*xcm[2])*r2);
-			icth=(int)(cth*nb_mu);
+			icth=(int)((cth+1.0)*nb_mu/2.0);
 		      }
 		      if((icth<nb_mu)&&(icth>=0)) {
 #ifdef _WITH_WEIGHTS

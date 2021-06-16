@@ -358,8 +358,8 @@ void write_CF(char *fname,
 	  rr=(ii+0.5)/(nb_r*i_r_max);
 	
 	for(jj=0;jj<nb_mu;jj++) {
-	  double corr;
-	  double mu=(jj+0.5)/(nb_mu);
+	  double corr; //changed below line
+	  double mu=(jj-nb_mu/2.0+0.5)/(2.0*nb_mu);
 	  int ind=jj+nb_mu*ii;
 	  corr=make_CF(D1D2[ind],D1R2[ind],R1D2[ind],R1R2[ind],
 		       sum_wd,sum_wd2,sum_wr,sum_wr2,
@@ -478,8 +478,8 @@ void write_CF_cuda(char *fname,unsigned long long *DD,
   }
   else if(corr_type==4) {
     for(ii=0;ii<NB_HISTO_2D;ii++) {
-      int jj;
-      double mu=(ii+0.5)/(NB_HISTO_2D);
+      int jj; //changed below line
+      double mu=(ii-NB_HISTO_2D/2.0+0.5)/(2.0*NB_HISTO_2D);
       for(jj=0;jj<NB_HISTO_2D;jj++) {
 	double rr;
 	if(logbin)

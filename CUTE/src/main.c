@@ -960,7 +960,8 @@ void run_3d_rm_corr_bf(void)
   timer(2);
   if(use_two_catalogs) {
     print_info(" - R-D \n");
-    cross_3d_rm_bf(nfull_dat_2,indices_dat_2,boxes_dat_2,boxes_ran,R1D2);
+    //cross_3d_rm_bf(nfull_dat_2,indices_dat_2,boxes_dat_2,boxes_ran,R1D2);
+    cross_3d_rm_bf(nfull_ran, indices_ran, boxes_ran, boxes_dat_2,R1D2);
     timer(2);
   }
   print_info(" - R-R \n");
